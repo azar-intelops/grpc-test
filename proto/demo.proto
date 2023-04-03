@@ -1,0 +1,17 @@
+syntax = "proto3";
+package demo;
+
+option go_package="./;demo";
+
+message DemoRequest {
+  string message = 1;
+}
+
+message DemoResponse {
+  string message = 1;
+}
+
+// gRPC service which has a Demo method returns message as response
+service MyService {
+  rpc DemoMethod(DemoRequest) returns (DemoResponse) {}
+}
