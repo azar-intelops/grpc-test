@@ -9,3 +9,6 @@ protoc:
 
 clean:
 	rm -rf pb
+
+grpc_doesnt_work:
+	source ~/.bash_profile

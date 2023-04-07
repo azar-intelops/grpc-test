@@ -4,7 +4,7 @@
 // - protoc             v3.6.1
 // source: proto/demo.proto
 
-package demo
+package pb
 
 import (
 	context "context"
@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	MyService_DemoMethod_FullMethodName = "/demo.MyService/DemoMethod"
+	MyService_DemoMethod_FullMethodName = "/pb.MyService/DemoMethod"
 )
 
 // MyServiceClient is the client API for MyService service.
@@ -96,7 +96,7 @@ func _MyService_DemoMethod_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MyService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "demo.MyService",
+	ServiceName: "pb.MyService",
 	HandlerType: (*MyServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -5,6 +5,8 @@ import (
 	"log"
 	"net"
 
+	"github.com/azar-intelops/go-interceptors/configs"
+	"github.com/azar-intelops/go-interceptors/controllers"
 	pb "github.com/azar-intelops/go-interceptors/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -33,9 +35,14 @@ func main() {
 		grpc.UnaryInterceptor(loggingInterceptor),
 	)
 
+	db := configs.DB
+	log.Println(db)
+
 	// Register your gRPC service with the server
 	myService := &Server{}
+	authService := controllers.NewAuthServer(db)
 	pb.RegisterMyServiceServer(s, myService)
+	pb.RegisterUserServiceServer(s, authService)
 	reflection.Register(s)
 
 	// Listen on port 50051
