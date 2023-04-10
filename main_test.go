@@ -82,3 +82,23 @@ func Test_CreateUser(t *testing.T) {
 		t.Fatal("User not created!")
 	}
 }
+
+func Test_GetUsers(t *testing.T) {
+	ctx := context.Background()
+	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer conn.Close()
+	client := pb.NewUserServiceClient(conn)
+
+	resp, err := client.GetUser(ctx, &pb.EmptyMessage{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(resp.Req) < 1 {
+		t.Fatal("Failed to fetch or No data in db")
+	}
+
+	log.Println(len(resp.Req))
+}
