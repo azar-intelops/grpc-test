@@ -70,6 +70,7 @@ func Test_CreateUser(t *testing.T) {
 	defer conn.Close()
 	client := pb.NewUserServiceClient(conn)
 
+	// case 1
 	resp, err := client.CreateUser(ctx, &pb.UserRequest{
 		Name:   "Ram",
 		Mobile: 8958589656,
@@ -79,6 +80,16 @@ func Test_CreateUser(t *testing.T) {
 		t.Fatal(err)
 	}
 	if resp.GetStatus() != "user successfully added!" {
+		t.Fatal("User not created!")
+	}
+
+	// case 2
+
+	resp1, err := client.CreateUser(ctx, &pb.UserRequest{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resp1.GetStatus() != "user successfully added!" {
 		t.Fatal("User not created!")
 	}
 }
@@ -92,6 +103,7 @@ func Test_GetUsers(t *testing.T) {
 	defer conn.Close()
 	client := pb.NewUserServiceClient(conn)
 
+	// Case 1
 	resp, err := client.GetUser(ctx, &pb.EmptyMessage{})
 	if err != nil {
 		t.Fatal(err)
@@ -99,6 +111,4 @@ func Test_GetUsers(t *testing.T) {
 	if len(resp.Req) < 1 {
 		t.Fatal("Failed to fetch or No data in db")
 	}
-
-	log.Println(len(resp.Req))
 }
