@@ -36,7 +36,7 @@ func main() {
 	)
 
 	db := configs.DB
-	log.Println(db)
+	// log.Println(db)
 
 	// Register your gRPC service with the server
 	myService := &Server{}
