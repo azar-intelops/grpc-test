@@ -12,3 +12,9 @@ clean:
 
 grpc_doesnt_work:
 	source ~/.bash_profile
+
+main:	
+	go run main.go
+
+test:
+	go test -v ./...
