@@ -31,6 +31,16 @@ func bufDialer(ctx context.Context, address string) (net.Conn, error) {
 	return lis.Dial()
 }
 
+func demoHelper(text string, ctx context.Context, client pb.MyServiceClient, t *testing.T) {
+	resp, err := client.DemoMethod(ctx, &pb.DemoRequest{Message: text})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resp.GetMessage() != "Hello "+text {
+		t.Fatal("Demo Response must be 'Hello " + text + "'")
+	}
+}
+
 func TestDemoMethod(t *testing.T) {
 	ctx := context.Background()
 	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -40,20 +50,8 @@ func TestDemoMethod(t *testing.T) {
 	defer conn.Close()
 	client := pb.NewMyServiceClient(conn)
 	// Case 1
-	resp, err := client.DemoMethod(ctx, &pb.DemoRequest{Message: "world"})
-	if err != nil {
-		t.Fatal(err)
-	}
-	if resp.GetMessage() != "Hello world" {
-		t.Fatal("Demo Response must be 'Hello world'")
-	}
+	demoHelper("world", ctx, client, t)
 	// Case 2
-	resp1, err := client.DemoMethod(ctx, &pb.DemoRequest{Message: "Compage"})
-	if err != nil {
-		t.Fatal(err)
-	}
-	if resp1.GetMessage() != "Hello Compage" {
-		t.Fatal("Demo Response must be 'Hello Compage'")
-	}
+	demoHelper("Compage", ctx, client, t)
 
 }
