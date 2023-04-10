@@ -74,11 +74,11 @@ func (s *AuthServer) CreateUser(ctx context.Context, req *pb.UserRequest) (*pb.U
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
-	res, err := userCollection.InsertOne(ctx, user)
+	_, err := userCollection.InsertOne(ctx, user)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(res.InsertedID)
+
 	return &pb.UserResponse{
 		Status: "user successfully added!",
 	}, nil
