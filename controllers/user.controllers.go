@@ -14,6 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type AuthServer struct {
@@ -26,7 +27,7 @@ func NewAuthServer(client *mongo.Client) *AuthServer {
 		client: client,
 	}
 }
-func (s *AuthServer) GetUser(ctx context.Context, req *pb.EmptyMessage) (*pb.UserRequest, error) {
+func (s *AuthServer) GetUser(ctx context.Context, req *pb.EmptyMessage) (*pb.UserResponses, error) {
 	userCollection := configs.GetCollection(s.client, "users")
 	var results []models.UserReq
 	cur, err := userCollection.Find(ctx, bson.D{})
@@ -37,11 +38,26 @@ func (s *AuthServer) GetUser(ctx context.Context, req *pb.EmptyMessage) (*pb.Use
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Found multiple documents: %+v\n", &results)
+	// fmt.Printf("Found multiple documents: %+v\n", results)
+	var response []*pb.UserRequest
+	for _, value := range results {
+		response = append(response, &pb.UserRequest{
+			Id:        value.Id.Hex(),
+			Name:      value.Name,
+			Mobile:    value.Mobile,
+			Email:     value.Email,
+			CreatedAt: timestamppb.New(value.CreatedAt),
+			UpdatedAt: timestamppb.New(value.UpdatedAt),
+		})
+
+	}
+	fmt.Println(response)
 	//Close the cursor once finished
 	defer cur.Close(context.TODO())
 
-	return &pb.UserRequest{}, nil
+	return &pb.UserResponses{
+		Req: response,
+	}, nil
 }
 func (s *AuthServer) CreateUser(ctx context.Context, req *pb.UserRequest) (*pb.UserResponse, error) {
 	if utils.IsEmpty(req.GetName()) || utils.IsEmpty(req.GetEmail()) || req.GetMobile() == 0 {
