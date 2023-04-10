@@ -53,5 +53,7 @@ func TestDemoMethod(t *testing.T) {
 	demoHelper("world", ctx, client, t)
 	// Case 2
 	demoHelper("Compage", ctx, client, t)
+	// case 3
+	demoHelper("Working fine", ctx, client, t)
 
 }
