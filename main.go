@@ -13,7 +13,7 @@ import (
 )
 
 // Define a gRPC interceptor
-func loggingInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+func loggingInterceptor(ctx context.Context, req interface{}, _ *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 	log.Printf("Received request: %v", req)
 	resp, err := handler(ctx, req)
 	return resp, err
