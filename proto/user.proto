@@ -20,7 +20,11 @@ message UserRequest {
     
   }
 
+  message UserResponses {
+    repeated UserRequest req = 1;
+  }
+
 service UserService {
     rpc CreateUser (UserRequest) returns (UserResponse) {};
-    rpc GetUser (EmptyMessage) returns (UserRequest) {};
+    rpc GetUser (EmptyMessage) returns (UserResponses) {};
 }  
