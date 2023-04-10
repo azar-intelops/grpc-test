@@ -18,3 +18,6 @@ main:
 
 test:
 	go test -v ./...
+
+evans:
+	evans -r repl -p 50051
