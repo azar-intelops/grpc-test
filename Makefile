@@ -27,3 +27,7 @@ go_test_with_coverage:
 
 remove_coverage:
 	rm -rf coverage.out
+
+# check code coverage
+test_code_coverage:
+	go test -cover ./utils
