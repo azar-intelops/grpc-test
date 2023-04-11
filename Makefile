@@ -34,3 +34,6 @@ test_code_coverage:
 
 gen_code_coverage:
 	go test -coverprofile=coverage.out ./utils
+
+code_profile_html_viewer:
+	go tool cover -html=coverage.out
