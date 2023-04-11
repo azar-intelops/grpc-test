@@ -31,3 +31,6 @@ remove_coverage:
 # check code coverage
 test_code_coverage:
 	go test -cover ./utils
+
+gen_code_coverage:
+	go test -coverprofile=coverage.out ./utils
