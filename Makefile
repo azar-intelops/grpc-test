@@ -21,3 +21,9 @@ test:
 
 evans:
 	evans -r repl -p 50051
+
+go_test_with_coverage:
+	go test -coverprofile=coverage.out ./...
+
+remove_coverage:
+	rm -rf coverage.out
