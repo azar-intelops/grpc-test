@@ -14,8 +14,10 @@ import (
 	"google.golang.org/grpc/test/bufconn"
 )
 
+// This is the representation of local server
 const bufsize = 1024 * 1024
 
+// listen to the mock server
 var lis *bufconn.Listener
 
 func init() {
@@ -85,7 +87,11 @@ func Test_CreateUser(t *testing.T) {
 
 	// case 2
 
-	resp1, err := client.CreateUser(ctx, &pb.UserRequest{})
+	resp1, err := client.CreateUser(ctx, &pb.UserRequest{
+		Name:   "Hari",
+		Mobile: 8989898989,
+		Email:  "hari@compage.com",
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
