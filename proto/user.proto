@@ -14,11 +14,9 @@ message UserRequest {
   }
   
   message UserResponse {
-    string status = 1;
+    string id = 1;
   }
-  message EmptyMessage {
-    
-  }
+  message EmptyMessage {}
 
   message UserResponses {
     repeated UserRequest req = 1;

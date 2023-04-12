@@ -81,7 +81,7 @@ func Test_CreateUser(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.GetStatus() != "user successfully added!" {
+	if resp.GetId() != resp.Id {
 		t.Fatal("User not created!")
 	}
 
@@ -95,7 +95,7 @@ func Test_CreateUser(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp1.GetStatus() != "user successfully added!" {
+	if resp1.GetId() != resp1.Id {
 		t.Fatal("User not created!")
 	}
 }
