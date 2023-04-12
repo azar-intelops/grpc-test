@@ -41,8 +41,10 @@ func main() {
 	// Register your gRPC service with the server
 	myService := &Server{}
 	authService := controllers.NewAuthServer(db)
+	authserver := controllers.NewAuthServiceServer(db)
 	pb.RegisterMyServiceServer(s, myService)
 	pb.RegisterUserServiceServer(s, authService)
+	pb.RegisterAuthServiceServer(s, authserver)
 	reflection.Register(s)
 
 	// Listen on port 50051
