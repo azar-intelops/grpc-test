@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+import "google/protobuf/timestamp.proto";
+option go_package = "./;pb";
+
+message SignupRequest {
+    string id = 1;
+    string name = 2;
+    int64 mobile = 3;
+    string email = 4;
+    string password = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+message  SignupResponse {
+    string id = 1;
+}
+
+service AuthService {
+    rpc Signup(SignupRequest) returns (SignupResponse){};
+}
